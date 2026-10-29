@@ -1,5 +1,7 @@
 # pyxpo-web-browser
 
+[![CI](https://github.com/pyxpo/pyxpo-web-browser/actions/workflows/ci.yml/badge.svg)](https://github.com/pyxpo/pyxpo-web-browser/actions/workflows/ci.yml) [![PyPI](https://img.shields.io/pypi/v/pyxpo-web-browser)](https://pypi.org/project/pyxpo-web-browser/) [![Python](https://img.shields.io/pypi/pyversions/pyxpo-web-browser)](https://pypi.org/project/pyxpo-web-browser/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 An in-app browser and OAuth sign-in sessions for [pyxpo](https://github.com/pyxpo/pyxpo) apps written in Python. The API follows
 [expo-web-browser](https://docs.expo.dev/versions/latest/sdk/webbrowser/). iOS uses `SFSafariViewController` and
 `ASWebAuthenticationSession`. Android uses Chrome Custom Tabs (`androidx.browser`). The user keeps their cookies, saved
