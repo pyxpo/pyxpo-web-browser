@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional
 
 from pyxpo.module_api import NotSupportedError, call, platform, require_linked, require_supported
 
-__version__ = "0.1.0a1"
+__version__ = "0.1.0a2"
 
 Result = Dict[str, Any]
 

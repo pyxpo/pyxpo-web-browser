@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.0a2
 
 - Android: `open_auth_session_async` claims its redirect URL while it waits, so the app router no longer opens the redirect as a new screen (needs a pyxpo core with `Linking.claimed`; older cores behave as before).
 - Moved to its own repository, github.com/pyxpo/pyxpo-web-browser, with CI on Python 3.9 and 3.12 and releases from tags.
