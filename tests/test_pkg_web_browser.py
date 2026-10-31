@@ -98,6 +98,21 @@ def test_android_auth_redirect():
         _events.emit("app_state", {"state": "active"})
 
 
+def test_android_auth_redirect_is_not_a_route():
+    from pyxpo import Linking
+    with FakeBridge("android") as fb:
+        seen = []
+        _events.on("url", lambda e: seen.append(Linking.is_claimed(e["url"])))
+
+        def opener(url, opts):
+            asyncio.get_running_loop().call_soon(_events.emit, "url", {"url": "app://cb?code=7"})
+            return {"type": "opened"}
+        fb.on("WebBrowser", "open", opener)
+        assert run(WebBrowser.open_auth_session_async("https://a.example/auth", "app://cb"))["type"] == "success"
+        assert seen == [True]  # the router skips it while the session waits
+        assert not Linking.is_claimed("app://cb?code=7") and Linking.claimed == []
+
+
 def test_android_auth_user_came_back():
     with FakeBridge("android") as fb:
         def opener(url, opts):

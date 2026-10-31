@@ -198,6 +198,10 @@ async def _android_auth(url: str, redirect_url: str, opts: Dict[str, Any]) -> Re
             loop.call_later(0.6, settle, {"type": "dismiss"})
 
     subs = [Linking.addEventListener("url", on_url), AppState.addEventListener("change", on_state)]
+    # The redirect is this session's answer, not a page: the router must not open it as a route.
+    claimed = getattr(Linking, "claimed", None) if redirect_url else None
+    if claimed is not None:
+        claimed.append(redirect_url)
     try:
         opts["createTask"] = False  # the redirect then closes the tab: the app's activity is singleTask
         await call("WebBrowser", "open", url, opts, reply=True)
@@ -206,6 +210,8 @@ async def _android_auth(url: str, redirect_url: str, opts: Dict[str, Any]) -> Re
         _auth_future = None
         for s in subs:
             s.remove()
+        if claimed is not None:
+            claimed.remove(redirect_url)  # every listener saw the redirect's event before this await resumed
 
 
 def dismiss_auth_session() -> None:
